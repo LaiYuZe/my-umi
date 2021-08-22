@@ -1,0 +1,29 @@
+name: deploy to aliyun oss
+
+on: [push]
+
+jobs:
+ build:
+    # 设置于运行系统
+    runs-on: ubuntu-latest
+    steps:
+    # 拉取最新代码
+    - uses: actions/checkout@v1
+    # 设置node版本
+    - uses: actions/setup-node@v1
+      with:
+        node-version: "16.x"
+      # 安装依赖和构建
+    - name: npm install and build
+      run: |
+        npm install
+        npm run build
+    - name: setup aliyun oss
+      # 设置阿里云OSS的 id/secret，存储到 github 的 secrets 中
+      uses: manyuanrong/setup-ossutil@v2.0
+      with:
+        endpoint: oss-cn-hangzhou.aliyuncs.com
+        access-key-id: ${{ secrets.OSS_KEY_ID }}
+        access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+    - name: cp files to aliyun
+      run: ossutil cp -rf dist oss://laiyuze/
