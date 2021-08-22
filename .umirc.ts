@@ -1,4 +1,4 @@
-import { defineConfig, Router } from 'umi';
+import { defineConfig } from 'umi';
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -11,4 +11,7 @@ export default defineConfig({
   // ],
   // ssr: {
   // },
+  history: {
+    type: 'hash',
+  },
 });
