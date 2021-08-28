@@ -18,12 +18,12 @@ jobs:
       run: |
         npm install
         npm run build
-    - name: setup aliyun oss
+    - name: setup aliyun oss config
       # 设置阿里云OSS的 id/secret，存储到 github 的 secrets 中
       uses: manyuanrong/setup-ossutil@v2.0
       with:
         endpoint: oss-cn-hangzhou.aliyuncs.com
         access-key-id: ${{ secrets.OSS_KEY_ID }}
         access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-    - name: cp files to aliyun
+    - name: upload assets to aliyun oss
       run: ossutil cp -rf dist oss://laiyuze/
